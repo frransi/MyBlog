@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Data.Context;
+using Domain.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -28,8 +28,22 @@ namespace blog
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            services.AddScoped<IBlogContext, BlogContext>();
+
+            services.AddDbContext<BlogContext>(options=>options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=blogDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
+            services.AddIdentity<User, IdentityRole>(io =>
+            {
+                io.Password.RequireDigit = false;
+                io.Password.RequireLowercase = false;
+                io.Password.RequireNonAlphanumeric = false;
+                io.Password.RequireUppercase = false;
+                io.Password.RequiredLength = 4;
+                io.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+            }).AddEntityFrameworkStores<BlogContext>();
             services.AddMvc();
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -46,7 +60,7 @@ namespace blog
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseIdentity();
             app.UseStaticFiles();
 
             app.UseMvc(routes =>

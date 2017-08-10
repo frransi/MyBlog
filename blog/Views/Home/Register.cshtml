@@ -1,0 +1,25 @@
+﻿@model RegisterViewModel
+@{
+    ViewBag.Title = "Registrera";
+}
+<div class="container container-fluid">
+    <section class="panel panel-default">
+
+
+        <div asp-validation-summary="All"></div>
+        <form asp-antiforgery="true" method="post">
+            <h2>Registrera ny användare</h2>
+            <div class="panel-body">
+                <div class="input-group">
+                    <input asp-for="Login" class="input-lg inputMargin" placeholder="Användarnamn" /><br/>
+                    <input asp-for="Password" class="input-lg inputMargin" placeholder="Lösenord" /><br/>
+                    <input asp-for="ConfirmPassword" class="input-lg inputMargin" placeholder="Upprepa lösenord" /><br/>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <input asp-action="Register" asp-controller="Home" class="btn btn-primary" value="Registrera" type="submit" />
+            </div>
+        </form>
+    </section>
+</div>
+

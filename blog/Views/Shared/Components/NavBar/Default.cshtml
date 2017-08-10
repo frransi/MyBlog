@@ -1,0 +1,17 @@
+﻿<nav class="navbar navbar-inverse navbar-fixed-top" style="height: 50px">
+    <div class="container-fluid">
+        <a class="navbar-brand">Mattias blogg</a>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-action="Logout" asp-controller="Home" class="navbar-brand glyphicon-bitcoin pull-right">Log out</a>
+            <a asp-action="NewPost" asp-controller="BlogPost" class="navbar-brand glyphicon-btc pull-right">New Post</a>
+        }
+        else
+        {
+            <a asp-controller="Home" asp-action="Login" class="navbar-brand glyphicon-bitcoin pull-right">Log in</a>
+        }
+
+
+    </div>
+</nav>

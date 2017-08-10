@@ -1,0 +1,24 @@
+﻿@model LoginViewModel
+@{
+    ViewBag.Title = "Logga in";
+}
+
+<div class="container container-fluid">
+    <section class="panel panel-default">
+        
+
+        <div asp-validation-summary="All"></div>
+        <form asp-antiforgery="true" method="post">
+            <h2>Logga in</h2>
+            <div class="panel-body">
+                <input asp-for="Login" class="input-lg" placeholder="Användarnamn"/>
+                <input asp-for="Password" class="input-lg" placeholder="Lösenord"/>
+            </div>
+            <div class="panel-footer">
+                <input asp-action="Login" asp-controller="Home"class="btn btn-primary" value="Logga in" type="submit"/>
+                <a asp-action="Register" asp-controller="Home">Registrera</a>
+            </div>
+        </form>
+    </section>
+</div>
+
